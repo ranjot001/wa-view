@@ -75,21 +75,21 @@ export function CallScreen({
           : STATE_TEXT[state];
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-between bg-gradient-to-b from-[#0b3d36] via-[#082a25] to-[#04120f] px-6 pb-14 pt-20 text-white">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-between call-bg px-6 pb-14 pt-20 text-white">
       <div className="flex flex-col items-center text-center">
-        <p className="text-xs uppercase tracking-[0.25em] text-emerald-200/60">
+        <p className="text-xs uppercase tracking-[0.25em] text-[var(--gold-300)]/70">
           {incoming ? "Sprinter Care · Incoming" : "Sprinter Care · Voice call"}
         </p>
         <div className="relative mt-10">
           {(state === "ringing" || state === "incoming") && (
-            <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400/20" />
+            <span className="absolute inset-0 animate-ping rounded-full bg-[var(--gold-400)]/20" />
           )}
           <div className="relative overflow-hidden rounded-full ring-4 ring-white/10">{avatar}</div>
         </div>
         <h2 className="mt-6 text-2xl font-semibold">{name}</h2>
-        {subtitle && <p className="mt-0.5 text-sm text-emerald-100/60">{subtitle}</p>}
+        {subtitle && <p className="mt-0.5 text-sm text-white/60">{subtitle}</p>}
         <p
-          className={`mt-3 text-base ${state === "connected" ? "tabular-nums text-emerald-200" : "text-emerald-100/80"} ${
+          className={`mt-3 text-base ${state === "connected" ? "tabular-nums text-[var(--gold-300)]" : "text-white/75"} ${
             state === "failed" ? "max-w-xs text-red-200" : ""
           }`}
         >
@@ -118,7 +118,7 @@ export function CallScreen({
           <RoundBtn
             label={muted ? "Unmute" : "Mute"}
             onClick={onMute!}
-            className={muted ? "bg-white text-[#0b3d36]" : "bg-white/15 hover:bg-white/25"}
+            className={muted ? "bg-white text-[var(--ink-900)]" : "bg-white/15 hover:bg-white/25"}
           >
             {muted ? <MicOffIcon className="h-6 w-6" /> : <MicIcon className="h-6 w-6" />}
           </RoundBtn>

@@ -25,7 +25,7 @@ export function VoiceMessage({ src, mine }: { src: string; mine: boolean }) {
       <button
         onClick={toggle}
         className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white ${
-          mine ? "bg-[var(--wa-green-deep)]" : "bg-[var(--wa-header)]"
+          mine ? "bg-[var(--gold-600)]" : "bg-[var(--ink-800)]"
         }`}
       >
         {playing ? <PauseIcon className="h-4 w-4" /> : <PlayIcon className="h-4 w-4" />}

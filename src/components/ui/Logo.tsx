@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 // Stylized gold "Sprinters" crest. Swap for the client's real logo asset later
 // (drop a PNG/SVG in /public and replace this component's innards).
 
@@ -73,16 +75,23 @@ export function LogoBadge({ size = 40 }: { size?: number }) {
   );
 }
 
-// Light rounded tile with the dark crest — used on the white "book" chat screens.
+// Midnight tile with the gold crest — the brand mark on light screens.
 export function LogoTile({ size = 44, rounded = "rounded-xl" }: { size?: number; rounded?: string }) {
+  const id = useId();
   return (
     <div
-      className={`flex shrink-0 items-center justify-center border border-neutral-200 bg-white ${rounded}`}
+      className={`flex shrink-0 items-center justify-center bg-gradient-to-b from-[var(--ink-700)] to-[var(--ink-900)] shadow-sm ring-1 ring-[var(--gold-500)]/35 ${rounded}`}
       style={{ width: size, height: size }}
     >
       <svg viewBox="0 0 24 24" width={size * 0.66} height={size * 0.66} aria-hidden>
-        <path d="M12 2.2l2.2 3.6L18 3.2l-1.1 5H7.1L6 3.2l3.8 2.6z" fill="#b8860b" />
-        <text x="12" y="20.5" textAnchor="middle" fontSize="10" fontWeight="900" fill="#141414" fontFamily="Georgia, serif">
+        <defs>
+          <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#f6dd9a" />
+            <stop offset="1" stopColor="#c99a2e" />
+          </linearGradient>
+        </defs>
+        <path d="M12 2.2l2.2 3.6L18 3.2l-1.1 5H7.1L6 3.2l3.8 2.6z" fill={`url(#${id})`} />
+        <text x="12" y="20.5" textAnchor="middle" fontSize="10" fontWeight="900" fill={`url(#${id})`} fontFamily="Georgia, serif">
           S
         </text>
       </svg>

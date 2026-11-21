@@ -87,7 +87,7 @@ export function AdminThread({
           <p className="truncate font-semibold">
             {customer?.display_name || customer?.phone || "Unknown"}
           </p>
-          <p className="text-xs text-emerald-100/80">{STATUS_TEXT[status]}</p>
+          <p className="text-xs text-[var(--gold-300)]/80">{STATUS_TEXT[status]}</p>
         </div>
         <div className="flex gap-1.5">
           {status !== "human" && status !== "closed" && (

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Logo } from "@/components/ui/Logo";
-import { WhatsAppIcon } from "@/components/ui/Icons";
+import { ChatBubbleIcon } from "@/components/ui/Icons";
 import { nationalPhoneSchema } from "@/lib/validation";
 import { BRAND } from "@/lib/env";
 
@@ -45,7 +45,7 @@ export function VerifyClient({ countryCode, bookName }: { countryCode: string; b
         </div>
         <div className="my-4 h-px w-full bg-gradient-to-r from-transparent via-[var(--brand-gold)]/40 to-transparent" />
 
-        <h1 className="text-center text-2xl font-bold text-[var(--brand-gold)]">
+        <h1 className="text-gold text-center text-2xl font-extrabold tracking-wide">
           {bookName}
         </h1>
         <p className="mt-1 text-center text-sm text-neutral-400">{BRAND.subtitle}</p>
@@ -69,9 +69,9 @@ export function VerifyClient({ countryCode, bookName }: { countryCode: string; b
         <button
           onClick={start}
           disabled={loading}
-          className="rec-pulse mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-b from-[var(--wa-green)] to-[var(--wa-green-deep)] px-4 py-3.5 font-semibold text-white shadow-lg transition active:scale-[0.99] disabled:opacity-60"
+          className="rec-pulse mt-5 flex w-full items-center justify-center gap-2 rounded-2xl btn-gold px-4 py-3.5 font-bold"
         >
-          <WhatsAppIcon className="h-5 w-5" />
+          <ChatBubbleIcon className="h-5 w-5" />
           {loading ? "Starting…" : "Start Chat"}
         </button>
 

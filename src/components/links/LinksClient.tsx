@@ -70,7 +70,7 @@ export function LinksClient({ links, bookName }: { links: SocialLinks; bookName:
     <main className="links-bg relative min-h-dvh px-4 pb-32 pt-12">
       <div className="mx-auto w-full max-w-md">
         <div className="flex flex-col items-center text-center">
-          <div className="flex h-28 w-28 items-center justify-center rounded-full bg-black shadow-[0_0_45px_rgba(225,48,108,0.35)] ring-2 ring-white/10">
+          <div className="flex h-28 w-28 items-center justify-center rounded-full bg-[var(--ink-950)] shadow-[0_0_48px_rgba(235,197,106,0.28)] ring-2 ring-[var(--gold-500)]/40">
             <Logo size={92} />
           </div>
           <h1 className="mt-5 text-2xl font-bold text-white">{bookName}</h1>
@@ -110,12 +110,12 @@ export function LinksClient({ links, bookName }: { links: SocialLinks; bookName:
         {pwa.ready && !pwa.installed && (
           <Link
             href="/install"
-            className="mt-6 flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-[#ffb21a] to-[#ff7a00] px-4 py-3.5 text-white shadow-[0_8px_30px_rgba(255,140,0,0.35)] active:scale-[0.99]"
+            className="mt-6 flex items-center justify-center gap-3 rounded-2xl btn-gold px-4 py-3.5"
           >
             <DownloadIcon className="h-6 w-6" />
             <span className="leading-tight">
               <span className="block text-xl font-bold">Install App</span>
-              <span className="block text-xs font-semibold uppercase tracking-wider text-white/85">
+              <span className="block text-xs font-semibold uppercase tracking-wider text-[#1d1406]/70">
                 Get the mobile app
               </span>
             </span>

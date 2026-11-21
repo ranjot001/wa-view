@@ -71,11 +71,11 @@ export function AdminConversationList({
   const waiting = list.filter((c) => c.status === "pending_human").length;
 
   return (
-    <main className="mx-auto min-h-dvh max-w-2xl bg-white">
+    <main className="mx-auto min-h-dvh max-w-2xl bg-white text-neutral-900">
       <header className="sticky top-0 z-10 flex items-center justify-between bg-[var(--wa-header)] px-4 py-3 text-white">
         <div>
           <h1 className="font-semibold">Support Inbox</h1>
-          <p className="text-xs text-emerald-100/80">
+          <p className="text-xs text-[var(--gold-300)]/80">
             Signed in as {adminName}
             {waiting > 0 && ` · ${waiting} waiting for an agent`}
           </p>
@@ -126,7 +126,7 @@ export function AdminConversationList({
                 href={`/admin/conversations/${c.id}`}
                 className="flex items-center gap-3 px-4 py-3 hover:bg-neutral-50"
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--wa-header)]/10 font-semibold text-[var(--wa-header)]">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--olive-soft)] font-semibold text-[var(--gold-700)]">
                   {(c.profile?.phone ?? "?").slice(-2)}
                 </div>
                 <div className="min-w-0 flex-1">

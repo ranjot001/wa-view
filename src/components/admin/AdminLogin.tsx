@@ -64,7 +64,7 @@ export function AdminLogin() {
         <button
           type="submit"
           disabled={loading}
-          className="mt-4 w-full rounded-xl bg-gradient-to-b from-[var(--wa-green)] to-[var(--wa-green-deep)] px-4 py-3 font-semibold text-white disabled:opacity-60"
+          className="mt-4 w-full rounded-xl btn-gold px-4 py-3 font-bold"
         >
           {loading ? "Please wait…" : "Sign in"}
         </button>
