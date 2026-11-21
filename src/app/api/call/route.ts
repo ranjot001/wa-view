@@ -5,6 +5,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "@/lib/auth";
 import { broadcast, rateLimit } from "@/lib/security";
 import { LOBBY } from "@/lib/call/constants";
+import { formatPhone } from "@/lib/format";
 
 export const runtime = "nodejs";
 
@@ -51,7 +52,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "This chat is closed" }, { status: 409 });
   }
 
-  const label = conversation.profile?.display_name || conversation.profile?.phone || "Customer";
+  const label = conversation.profile?.display_name || formatPhone(conversation.profile?.phone) || "Customer";
   await broadcast(LOBBY, body.action, { conversationId: conversation.id, label });
   return NextResponse.json({ ok: true });
 }

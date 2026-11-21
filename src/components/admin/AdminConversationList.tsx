@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import type { Conversation, ConversationStatus, ConversationWithProfile } from "@/lib/types";
-import { formatTime } from "@/lib/format";
+import { formatPhone, formatTime } from "@/lib/format";
 import { SignOutButton } from "./SignOutButton";
 
 const STATUS_META: Record<ConversationStatus, { label: string; cls: string }> = {
@@ -131,7 +131,7 @@ export function AdminConversationList({
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-medium text-neutral-800">
-                    {c.profile?.display_name || c.profile?.phone || "Unknown"}
+                    {c.profile?.display_name || formatPhone(c.profile?.phone) || "Unknown"}
                   </p>
                   <p className="truncate text-sm text-neutral-500">
                     {c.last_message_at ? `Last activity ${formatTime(c.last_message_at)}` : "No messages yet"}

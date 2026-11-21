@@ -7,6 +7,7 @@ import { uploadChatMedia } from "@/lib/upload";
 import type { Conversation, ConversationStatus, Message, Profile } from "@/lib/types";
 import { BackIcon } from "@/components/ui/Icons";
 import { MessageList } from "@/components/chat/MessageList";
+import { formatPhone } from "@/lib/format";
 import { Composer } from "@/components/chat/Composer";
 import { useRealtimeMessages } from "@/components/chat/useRealtimeMessages";
 
@@ -85,7 +86,7 @@ export function AdminThread({
         </div>
         <div className="min-w-0 flex-1 leading-tight">
           <p className="truncate font-semibold">
-            {customer?.display_name || customer?.phone || "Unknown"}
+            {customer?.display_name || formatPhone(customer?.phone) || "Unknown"}
           </p>
           <p className="text-xs text-[var(--gold-300)]/80">{STATUS_TEXT[status]}</p>
         </div>

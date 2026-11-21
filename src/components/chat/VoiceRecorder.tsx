@@ -81,6 +81,7 @@ export function VoiceRecorder({
       disabled={disabled}
       className={className}
       title="Record voice note"
+      aria-label="Record voice note"
     >
       <MicIcon className="h-6 w-6" />
     </button>

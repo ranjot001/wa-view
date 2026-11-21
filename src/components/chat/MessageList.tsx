@@ -14,6 +14,7 @@ export function MessageList({
   typing,
   startedWith,
   botName,
+  loggedInAs,
 }: {
   messages: Message[];
   mineSide: SenderType;
@@ -22,6 +23,8 @@ export function MessageList({
   startedWith?: string;
   // Name shown on bot bubbles (the book name).
   botName?: string;
+  // Customer view: "Logged in as +91 98765 43210" chip at the top.
+  loggedInAs?: string;
 }) {
   const endRef = useRef<HTMLDivElement>(null);
 
@@ -38,6 +41,7 @@ export function MessageList({
         <Chip>Say hi 👋 — how can we help you today?</Chip>
       )}
       {messages.length === 0 && startedWith && <Chip tone="sys">Chat started with 💻 {startedWith}</Chip>}
+      {messages.length === 0 && loggedInAs && <LoggedInChip phone={loggedInAs} />}
 
       {messages.map((m, i) => {
         const k = dayKey(m.created_at);
@@ -52,6 +56,7 @@ export function MessageList({
           <div key={m.id} className="space-y-2">
             {showDay && <Chip upper>{dayLabel(m.created_at)}</Chip>}
             {i === 0 && startedWith && <Chip tone="sys">Chat started with 💻 {startedWith}</Chip>}
+            {i === 0 && loggedInAs && <LoggedInChip phone={loggedInAs} />}
             {agentJoined && <Chip tone="sys">Support agent joined the conversation</Chip>}
             <MessageBubble m={m} mine={mine} label={label} />
           </div>
@@ -68,6 +73,19 @@ export function MessageList({
         </div>
       )}
       <div ref={endRef} />
+    </div>
+  );
+}
+
+function LoggedInChip({ phone }: { phone: string }) {
+  return (
+    <div className="my-1 flex justify-center px-4">
+      <span
+        data-testid="logged-in-as"
+        className="rounded-lg bg-[var(--ink-800)] px-3 py-1.5 text-center text-xs text-white/80 shadow-sm md:text-sm"
+      >
+        Logged in as <b className="tabular-nums text-[var(--gold-300)]">{phone}</b>
+      </span>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Logo } from "@/components/ui/Logo";
 import { ChatBubbleIcon } from "@/components/ui/Icons";
 import { nationalPhoneSchema } from "@/lib/validation";
+import { formatNationalPartial } from "@/lib/format";
 import { BRAND } from "@/lib/env";
 
 // Turned off for now: after entering the number, go straight to the chat instead of the
@@ -70,10 +71,31 @@ export function VerifyClient({ countryCode, bookName }: { countryCode: string; b
           />
         </div>
 
+        {/* Big, formatted read-back so a wrong digit is easy to spot before starting. */}
+        <div className="mt-3 min-h-[52px] text-center" aria-live="polite">
+          {phone ? (
+            <>
+              <p className="text-[11px] uppercase tracking-[0.18em] text-neutral-500">
+                {phone.length === 10 ? "You'll chat as" : `${phone.length}/10 digits`}
+              </p>
+              <p
+                data-testid="phone-preview"
+                className={`mt-0.5 text-xl font-bold tracking-wider tabular-nums ${
+                  phone.length === 10 ? "text-[var(--gold-300)]" : "text-neutral-400"
+                }`}
+              >
+                {countryCode} {formatNationalPartial(phone)}
+              </p>
+            </>
+          ) : (
+            <p className="pt-4 text-xs text-neutral-500">Double-check your number — your chat is linked to it.</p>
+          )}
+        </div>
+
         <button
           onClick={start}
           disabled={loading}
-          className="rec-pulse mt-5 flex w-full items-center justify-center gap-2 rounded-2xl btn-gold px-4 py-3.5 font-bold"
+          className="rec-pulse mt-2 flex w-full items-center justify-center gap-2 rounded-2xl btn-gold px-4 py-3.5 font-bold"
         >
           <ChatBubbleIcon className="h-5 w-5" />
           {loading ? "Starting…" : "Start Chat"}

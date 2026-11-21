@@ -22,7 +22,7 @@ import {
   StatusIcon,
   UserIcon,
 } from "@/components/ui/Icons";
-import { formatTime } from "@/lib/format";
+import { formatPhone, formatTime } from "@/lib/format";
 import { usePwaInstall } from "@/lib/pwa";
 
 const MODAL_SEEN_KEY = "book:install-modal-seen";
@@ -134,7 +134,7 @@ export function ChatClient({
           <SettingsIcon className="h-6 w-6" />
         </RailButton>
         <div
-          title={customerPhone}
+          title={formatPhone(customerPhone)}
           className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/70 ring-1 ring-white/10"
         >
           <UserIcon className="h-6 w-6" />
@@ -142,7 +142,7 @@ export function ChatClient({
       </nav>
 
       {/* Chat list (desktop) */}
-      <ChatList supportName={supportName} bookName={bookName} last={last} />
+      <ChatList supportName={supportName} bookName={bookName} last={last} phone={formatPhone(customerPhone)} />
 
       {/* Conversation pane */}
       <section className="flex min-w-0 flex-1 flex-col">
@@ -154,6 +154,7 @@ export function ChatClient({
           typing={typing}
           startedWith={supportName}
           botName={bookName}
+          loggedInAs={formatPhone(customerPhone)}
         />
         <Composer
           onSendText={sendText}
@@ -214,10 +215,12 @@ function ChatList({
   supportName,
   bookName,
   last,
+  phone,
 }: {
   supportName: string;
   bookName: string;
   last?: Message;
+  phone: string;
 }) {
   const [query, setQuery] = useState("");
   const [tab, setTab] = useState<"all" | "unread">("all");
@@ -235,7 +238,14 @@ function ChatList({
 
   return (
     <aside className="hidden w-[34%] max-w-[440px] shrink-0 flex-col border-r border-neutral-200 bg-white md:flex">
-      <h1 className="px-5 pb-3 pt-5 text-2xl font-bold">Chats</h1>
+      <div className="px-5 pb-3 pt-5">
+        <h1 className="text-2xl font-bold">Chats</h1>
+        {phone && (
+          <p className="mt-0.5 text-sm text-neutral-500">
+            Logged in as <span className="font-semibold tabular-nums text-neutral-800">{phone}</span>
+          </p>
+        )}
+      </div>
       <div className="px-4">
         <label className="flex items-center gap-3 rounded-xl bg-[var(--cream-100)] px-4 py-2.5 text-neutral-500">
           <SearchIcon className="h-5 w-5" />

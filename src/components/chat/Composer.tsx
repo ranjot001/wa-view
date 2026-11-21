@@ -62,7 +62,7 @@ export function Composer({
       )}
 
       <div className="flex items-center gap-0.5 md:gap-1.5">
-        <button onClick={() => setShowEmoji((v) => !v)} className={`${iconBtn} text-amber-500`} title="Emoji">
+        <button onClick={() => setShowEmoji((v) => !v)} className={`${iconBtn} text-amber-500`} title="Emoji" aria-label="Emoji">
           <SmileIcon className="h-6 w-6" />
         </button>
         <button
@@ -70,6 +70,7 @@ export function Composer({
           disabled={disabled}
           className={`${iconBtn} hidden text-[var(--gold-600)] sm:block`}
           title="Send photo"
+          aria-label="Send photo"
         >
           <DocIcon className="h-6 w-6" />
         </button>
@@ -83,6 +84,7 @@ export function Composer({
           disabled={disabled}
           className={`${iconBtn} text-sky-600`}
           title="Attach photo"
+          aria-label="Attach photo"
         >
           <PaperclipIcon className="h-6 w-6" />
         </button>
@@ -99,6 +101,7 @@ export function Composer({
           rows={1}
           disabled={disabled}
           placeholder={placeholder}
+          aria-label="Message"
           className="ml-1 max-h-28 min-w-0 flex-1 resize-none rounded-full bg-[var(--cream-100)] px-4 py-2.5 text-[15px] text-neutral-900 outline-none placeholder:text-neutral-500 md:px-5 md:py-3 md:text-base"
         />
 
@@ -107,6 +110,7 @@ export function Composer({
           disabled={disabled || !text.trim()}
           className="ml-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--call-green)] text-white shadow transition disabled:bg-neutral-200 disabled:text-neutral-400 md:h-12 md:w-12"
           title="Send"
+          aria-label="Send message"
         >
           <SendIcon className="h-5 w-5" />
         </button>
