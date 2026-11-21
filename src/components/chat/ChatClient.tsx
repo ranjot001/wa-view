@@ -114,7 +114,7 @@ export function ChatClient({
   return (
     <div className="flex h-dvh w-full overflow-hidden bg-white text-neutral-900">
       {/* Left icon rail (desktop) */}
-      <nav className="hidden w-[68px] shrink-0 flex-col items-center gap-2 border-r border-neutral-200 bg-[var(--rail)] py-3 md:flex">
+      <nav className="hidden w-[68px] shrink-0 flex-col items-center gap-2 border-r border-white/5 bg-[var(--rail)] py-3 md:flex">
         <LogoTile size={44} rounded="rounded-full" />
         <RailButton active title="Chats">
           <ChatsIcon className="h-6 w-6" />
@@ -131,7 +131,7 @@ export function ChatClient({
         </RailButton>
         <div
           title={customerPhone}
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-300 text-white"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/70 ring-1 ring-white/10"
         >
           <UserIcon className="h-6 w-6" />
         </div>
@@ -182,7 +182,9 @@ export function ChatClient({
 
 function railCls(active: boolean) {
   return `flex h-11 w-11 items-center justify-center rounded-full transition ${
-    active ? "bg-neutral-300/70 text-neutral-800" : "text-neutral-600 hover:bg-neutral-200"
+    active
+      ? "bg-white/10 text-[var(--gold-400)] shadow-[inset_0_0_0_1px_rgba(235,197,106,0.35)]"
+      : "text-white/55 hover:bg-white/5 hover:text-white"
   }`;
 }
 
@@ -231,7 +233,7 @@ function ChatList({
     <aside className="hidden w-[34%] max-w-[440px] shrink-0 flex-col border-r border-neutral-200 bg-white md:flex">
       <h1 className="px-5 pb-3 pt-5 text-2xl font-bold">Chats</h1>
       <div className="px-4">
-        <label className="flex items-center gap-3 rounded-xl bg-neutral-100 px-4 py-2.5 text-neutral-500">
+        <label className="flex items-center gap-3 rounded-xl bg-[var(--cream-100)] px-4 py-2.5 text-neutral-500">
           <SearchIcon className="h-5 w-5" />
           <input
             value={query}
@@ -256,9 +258,9 @@ function ChatList({
       </div>
 
       {visible ? (
-        <div className="flex items-center gap-3 bg-neutral-100/80 px-4 py-3">
+        <div className="flex items-center gap-3 border-l-[3px] border-[var(--gold-500)] bg-[var(--cream-100)] px-4 py-3">
           <div className="relative">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-200 text-white">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--ink-800)] text-[var(--gold-300)]">
               <UserIcon className="h-8 w-8" />
             </div>
             <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-white bg-neutral-400" />

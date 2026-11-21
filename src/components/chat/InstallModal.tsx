@@ -63,7 +63,7 @@ export function InstallModal({ bookName, onClose }: { bookName: string; onClose:
 
         <button
           onClick={install}
-          className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[var(--olive)] px-5 py-4 text-[17px] font-bold text-white shadow-lg transition hover:brightness-110 active:scale-[0.99]"
+          className="mt-6 flex w-full items-center justify-center gap-2 btn-gold rounded-full px-5 py-4 text-[17px] font-bold"
         >
           <DownloadIcon className="h-5 w-5" /> Install {bookName}
         </button>

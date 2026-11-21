@@ -36,7 +36,7 @@ export function AdminSettings({ initial }: { initial: AppSettings }) {
     "w-full rounded-xl border border-neutral-200 bg-white px-3 py-2.5 text-[15px] text-neutral-900 outline-none focus:border-[var(--olive)]";
 
   return (
-    <main className="min-h-dvh bg-[#f5f5f0] text-neutral-900">
+    <main className="min-h-dvh bg-[var(--cream-100)] text-neutral-900">
       <header className="sticky top-0 z-10 flex items-center gap-3 border-b bg-white px-4 py-3">
         <Link href="/admin/conversations" className="rounded-full p-1.5 hover:bg-neutral-100" aria-label="Back">
           <BackIcon className="h-5 w-5" />
@@ -82,7 +82,7 @@ export function AdminSettings({ initial }: { initial: AppSettings }) {
             <button
               onClick={save}
               disabled={saving}
-              className="rounded-full bg-[var(--olive)] px-6 py-2.5 font-semibold text-white disabled:opacity-60"
+              className="btn-gold rounded-full px-6 py-2.5 font-bold"
             >
               {saving ? "Saving…" : "Save"}
             </button>

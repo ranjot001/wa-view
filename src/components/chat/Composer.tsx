@@ -68,7 +68,7 @@ export function Composer({
         <button
           onClick={() => fileRef.current?.click()}
           disabled={disabled}
-          className={`${iconBtn} hidden text-orange-500 sm:block`}
+          className={`${iconBtn} hidden text-[var(--gold-600)] sm:block`}
           title="Send photo"
         >
           <DocIcon className="h-6 w-6" />
@@ -76,12 +76,12 @@ export function Composer({
         <VoiceRecorder
           onComplete={onSendVoice}
           disabled={disabled}
-          className={`${iconBtn} text-red-500`}
+          className={`${iconBtn} text-rose-500`}
         />
         <button
           onClick={() => fileRef.current?.click()}
           disabled={disabled}
-          className={`${iconBtn} text-blue-500`}
+          className={`${iconBtn} text-sky-600`}
           title="Attach photo"
         >
           <PaperclipIcon className="h-6 w-6" />
@@ -99,7 +99,7 @@ export function Composer({
           rows={1}
           disabled={disabled}
           placeholder={placeholder}
-          className="ml-1 max-h-28 min-w-0 flex-1 resize-none rounded-full bg-neutral-100 px-4 py-2.5 text-[15px] text-neutral-900 outline-none placeholder:text-neutral-500 md:px-5 md:py-3 md:text-base"
+          className="ml-1 max-h-28 min-w-0 flex-1 resize-none rounded-full bg-[var(--cream-100)] px-4 py-2.5 text-[15px] text-neutral-900 outline-none placeholder:text-neutral-500 md:px-5 md:py-3 md:text-base"
         />
 
         <button

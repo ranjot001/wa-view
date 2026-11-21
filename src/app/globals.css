@@ -1,23 +1,41 @@
 @import "tailwindcss";
 
 :root {
-  /* Sprinters brand */
-  --brand-gold: #e7c15b;
-  --brand-gold-soft: #f0d589;
-  --brand-ink: #0b0b0d;
-  --brand-ink-2: #141416;
-  --brand-card: #121214;
-  --brand-border: #2a2a2e;
+  /* ===== Royal Midnight & Gold — design tokens ===== */
+  --ink-950: #070d1a;
+  --ink-900: #0a1324;
+  --ink-800: #0f1b33;
+  --ink-700: #172543;
+  --ink-600: #22355c;
+  --gold-200: #fbecc4;
+  --gold-300: #f6dd9a;
+  --gold-400: #ebc56a;
+  --gold-500: #d9a441;
+  --gold-600: #b8862b;
+  --gold-700: #8e6519;
+  --emerald-500: #12b76a;
+  --emerald-600: #0e9358;
+  --cream-50: #fcfaf5;
+  --cream-100: #f5f1e8;
+  --sand-100: #f2ece0;
+  --sand-300: #e2d6bf;
 
-  /* WhatsApp-style chat palette */
-  --wa-green: #25d366;
-  --wa-green-deep: #1faa52;
-  --wa-header: #075e54;
-  --wa-header-2: #0b6b5f;
-  --wa-chat-bg: #efeae2;
-  --wa-out: #d9fdd3;
+  /* Legacy names mapped onto the system (used across components) */
+  --brand-gold: var(--gold-400);
+  --brand-gold-soft: var(--gold-300);
+  --brand-ink: var(--ink-900);
+  --brand-ink-2: var(--ink-800);
+  --brand-card: var(--ink-800);
+  --brand-border: var(--ink-600);
+
+  --wa-green: var(--emerald-500);
+  --wa-green-deep: var(--emerald-600);
+  --wa-header: var(--ink-800);
+  --wa-header-2: var(--ink-700);
+  --wa-chat-bg: var(--sand-100);
+  --wa-out: #fbf0d3;
   --wa-in: #ffffff;
-  --wa-tick: #53bdeb;
+  --wa-tick: #2e90fa;
 }
 
 html, body {
@@ -26,18 +44,19 @@ html, body {
 
 body {
   margin: 0;
-  background: var(--brand-ink);
+  background: var(--ink-900);
   color: #f5f5f5;
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Verify screen ambient background */
+/* Dark brand pages: midnight navy with a soft crown-gold glow */
 .brand-bg {
   background:
-    radial-gradient(1200px 500px at 50% -10%, rgba(231, 193, 91, 0.12), transparent 60%),
-    repeating-linear-gradient(135deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 22px),
-    var(--brand-ink);
+    radial-gradient(720px 420px at 50% -10%, rgba(70, 110, 200, 0.30), transparent 70%),
+    radial-gradient(700px 500px at 110% 110%, rgba(46, 90, 180, 0.22), transparent 60%),
+    radial-gradient(600px 420px at -10% 100%, rgba(18, 183, 106, 0.08), transparent 60%),
+    var(--ink-900);
 }
 
 /* WhatsApp doodle wallpaper for the chat thread */
@@ -71,34 +90,34 @@ body {
 .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); border-radius: 8px; }
 
 @keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.45); }
-  70% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(235, 197, 106, 0.45); }
+  70% { box-shadow: 0 0 0 12px rgba(235, 197, 106, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(235, 197, 106, 0); }
 }
 .rec-pulse { animation: pulse-ring 1.4s infinite; }
 
-/* Social links page background (deep maroon → ink) */
+/* Social links page background */
 .links-bg {
   background:
-    radial-gradient(700px 420px at 50% 0%, rgba(140, 20, 60, 0.35), transparent 70%),
-    radial-gradient(600px 400px at 100% 100%, rgba(30, 60, 90, 0.35), transparent 70%),
-    var(--brand-ink);
+    radial-gradient(620px 380px at 50% -8%, rgba(70, 110, 200, 0.30), transparent 72%),
+    radial-gradient(600px 400px at 100% 100%, rgba(46, 90, 180, 0.25), transparent 70%),
+    var(--ink-900);
 }
 
 /* ---------- Customer chat (light "book" theme) ---------- */
 :root {
-  --olive: #7c7636;
-  --olive-soft: #f3f1e4;
-  --call-green: #3fcb6c;
-  --sys-chip: #fbf1cc;
-  --chat-beige: #efe9dd;
-  --rail: #f0f2f5;
+  --olive: var(--gold-700);       /* accent text/icons on light surfaces */
+  --olive-soft: #fbf1d6;          /* soft gold tint (pills, active tabs) */
+  --call-green: var(--emerald-500);
+  --sys-chip: #fff3cf;
+  --chat-beige: var(--sand-100);
+  --rail: var(--ink-900);
 }
 
 /* Beige wallpaper with soft line doodles (faces, cameras, stars, hearts, bubbles…) */
 .chat-doodle {
-  background-color: var(--chat-beige);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23ddd3c2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='34' cy='30' r='16'/%3E%3Cpath d='M26 34c4 5 12 5 16 0M28 25h.1M40 25h.1'/%3E%3Crect x='96' y='16' width='34' height='26' rx='6'/%3E%3Ccircle cx='113' cy='29' r='7'/%3E%3Cpath d='M190 12l6 13 14 2-10 10 2 14-12-7-12 7 2-14-10-10 14-2z'/%3E%3Cpath d='M30 120c-8-8-20 2-12 12l12 12 12-12c8-10-4-20-12-12z'/%3E%3Cpath d='M112 104l16 28h-32z'/%3E%3Cpath d='M190 108l20 20M210 108l-20 20'/%3E%3Cpath d='M20 196h20M30 186v20'/%3E%3Cpath d='M96 182h40a8 8 0 0 1 8 8v18a8 8 0 0 1-8 8h-24l-10 9v-9h-6a8 8 0 0 1-8-8v-18a8 8 0 0 1 8-8z'/%3E%3Cpath d='M180 196c4-10 24-10 28 0'/%3E%3Cpath d='M172 80c8-6 16 6 24 0s16 6 24 0'/%3E%3C/g%3E%3C/svg%3E");
+  background-color: var(--sand-100);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23e2d6bf' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='34' cy='30' r='16'/%3E%3Cpath d='M26 34c4 5 12 5 16 0M28 25h.1M40 25h.1'/%3E%3Crect x='96' y='16' width='34' height='26' rx='6'/%3E%3Ccircle cx='113' cy='29' r='7'/%3E%3Cpath d='M190 12l6 13 14 2-10 10 2 14-12-7-12 7 2-14-10-10 14-2z'/%3E%3Cpath d='M30 120c-8-8-20 2-12 12l12 12 12-12c8-10-4-20-12-12z'/%3E%3Cpath d='M112 104l16 28h-32z'/%3E%3Cpath d='M190 108l20 20M210 108l-20 20'/%3E%3Cpath d='M20 196h20M30 186v20'/%3E%3Cpath d='M96 182h40a8 8 0 0 1 8 8v18a8 8 0 0 1-8 8h-24l-10 9v-9h-6a8 8 0 0 1-8-8v-18a8 8 0 0 1 8-8z'/%3E%3Cpath d='M180 196c4-10 24-10 28 0'/%3E%3Cpath d='M172 80c8-6 16 6 24 0s16 6 24 0'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 .bubble-tail-in::before {
@@ -125,3 +144,30 @@ body {
   to { opacity: 1; transform: none; }
 }
 .pop-in { animation: pop-in 0.22s ease-out; }
+
+/* ---------- Shared components ---------- */
+/* Primary action: champagne-gold gradient with ink text */
+.btn-gold {
+  color: #1d1406;
+  background: linear-gradient(180deg, var(--gold-300) 0%, var(--gold-400) 38%, var(--gold-500) 72%, var(--gold-600) 100%);
+  box-shadow: 0 10px 26px -10px rgba(217, 164, 65, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  transition: filter 0.15s, transform 0.1s;
+}
+.btn-gold:hover { filter: brightness(1.05); }
+.btn-gold:active { transform: scale(0.99); }
+.btn-gold:disabled { filter: grayscale(0.4); opacity: 0.6; }
+
+/* Gold gradient text for headings on dark backgrounds */
+.text-gold {
+  background: linear-gradient(180deg, var(--gold-200), var(--gold-400) 55%, var(--gold-600));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Full-screen call overlay */
+.call-bg {
+  background:
+    radial-gradient(600px 400px at 50% 20%, rgba(235, 197, 106, 0.16), transparent 65%),
+    linear-gradient(180deg, var(--ink-700), var(--ink-900) 55%, var(--ink-950));
+}

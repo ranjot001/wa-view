@@ -113,7 +113,7 @@ export function InstallClient({ next = "/chat", bookName }: { next?: string; boo
 
             <button
               onClick={install}
-              className="rec-pulse mt-7 flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-b from-[var(--wa-green)] to-[var(--wa-green-deep)] px-4 py-3.5 text-[16px] font-semibold text-white shadow-lg transition active:scale-[0.99]"
+              className="rec-pulse mt-7 flex w-full items-center justify-center gap-2 rounded-2xl btn-gold px-4 py-3.5 text-[16px] font-bold transition active:scale-[0.99]"
             >
               <DownloadIcon className="h-5 w-5" /> Install App
             </button>
@@ -170,7 +170,7 @@ export function InstallClient({ next = "/chat", bookName }: { next?: string; boo
             </div>
             <button
               onClick={goChat}
-              className="mt-7 w-full rounded-2xl bg-gradient-to-b from-[var(--wa-green)] to-[var(--wa-green-deep)] px-4 py-3.5 font-semibold text-white shadow-lg active:scale-[0.99]"
+              className="mt-7 w-full rounded-2xl btn-gold px-4 py-3.5 font-bold active:scale-[0.99]"
             >
               Continue to Chat
             </button>
@@ -249,7 +249,7 @@ function Guide({
 
       <button
         onClick={onDone}
-        className="mt-6 w-full rounded-2xl bg-gradient-to-b from-[var(--wa-green)] to-[var(--wa-green-deep)] px-4 py-3.5 font-semibold text-white shadow-lg active:scale-[0.99]"
+        className="mt-6 w-full rounded-2xl btn-gold px-4 py-3.5 font-bold active:scale-[0.99]"
       >
         Done — maine add kar liya
       </button>
