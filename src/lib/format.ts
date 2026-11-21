@@ -20,10 +20,3 @@ export function dayLabel(iso: string): string {
   if (diffDays === 1) return "Yesterday";
   return d.toLocaleDateString([], { day: "2-digit", month: "short", year: "numeric" });
 }
-
-export function maskPhone(phone: string | null | undefined): string {
-  if (!phone) return "Unknown";
-  const digits = phone.replace(/\D/g, "");
-  if (digits.length < 4) return phone;
-  return `+${digits.slice(0, digits.length - 8)} ••••• ${digits.slice(-3)}`.trim();
-}

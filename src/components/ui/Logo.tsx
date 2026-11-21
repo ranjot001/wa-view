@@ -25,6 +25,8 @@ export function Logo({ size = 120 }: { size?: number }) {
           fontSize="20"
           fontWeight="800"
           letterSpacing="2"
+          textLength="110"
+          lengthAdjust="spacingAndGlyphs"
           fill="url(#gold)"
           fontFamily="Georgia, 'Times New Roman', serif"
         >
@@ -36,6 +38,8 @@ export function Logo({ size = 120 }: { size?: number }) {
           textAnchor="middle"
           fontSize="6.5"
           letterSpacing="3"
+          textLength="104"
+          lengthAdjust="spacingAndGlyphs"
           fill="#d9c58a"
           fontFamily="ui-sans-serif, system-ui"
         >
@@ -64,6 +68,23 @@ export function LogoBadge({ size = 40 }: { size?: number }) {
           fill="url(#goldb)"
         />
         <text x="12" y="20" textAnchor="middle" fontSize="9" fontWeight="800" fill="url(#goldb)" fontFamily="Georgia, serif">S</text>
+      </svg>
+    </div>
+  );
+}
+
+// Light rounded tile with the dark crest — used on the white "book" chat screens.
+export function LogoTile({ size = 44, rounded = "rounded-xl" }: { size?: number; rounded?: string }) {
+  return (
+    <div
+      className={`flex shrink-0 items-center justify-center border border-neutral-200 bg-white ${rounded}`}
+      style={{ width: size, height: size }}
+    >
+      <svg viewBox="0 0 24 24" width={size * 0.66} height={size * 0.66} aria-hidden>
+        <path d="M12 2.2l2.2 3.6L18 3.2l-1.1 5H7.1L6 3.2l3.8 2.6z" fill="#b8860b" />
+        <text x="12" y="20.5" textAnchor="middle" fontSize="10" fontWeight="900" fill="#141414" fontFamily="Georgia, serif">
+          S
+        </text>
       </svg>
     </div>
   );

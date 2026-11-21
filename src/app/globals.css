@@ -76,3 +76,52 @@ body {
   100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
 }
 .rec-pulse { animation: pulse-ring 1.4s infinite; }
+
+/* Social links page background (deep maroon → ink) */
+.links-bg {
+  background:
+    radial-gradient(700px 420px at 50% 0%, rgba(140, 20, 60, 0.35), transparent 70%),
+    radial-gradient(600px 400px at 100% 100%, rgba(30, 60, 90, 0.35), transparent 70%),
+    var(--brand-ink);
+}
+
+/* ---------- Customer chat (light "book" theme) ---------- */
+:root {
+  --olive: #7c7636;
+  --olive-soft: #f3f1e4;
+  --call-green: #3fcb6c;
+  --sys-chip: #fbf1cc;
+  --chat-beige: #efe9dd;
+  --rail: #f0f2f5;
+}
+
+/* Beige wallpaper with soft line doodles (faces, cameras, stars, hearts, bubbles…) */
+.chat-doodle {
+  background-color: var(--chat-beige);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23ddd3c2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='34' cy='30' r='16'/%3E%3Cpath d='M26 34c4 5 12 5 16 0M28 25h.1M40 25h.1'/%3E%3Crect x='96' y='16' width='34' height='26' rx='6'/%3E%3Ccircle cx='113' cy='29' r='7'/%3E%3Cpath d='M190 12l6 13 14 2-10 10 2 14-12-7-12 7 2-14-10-10 14-2z'/%3E%3Cpath d='M30 120c-8-8-20 2-12 12l12 12 12-12c8-10-4-20-12-12z'/%3E%3Cpath d='M112 104l16 28h-32z'/%3E%3Cpath d='M190 108l20 20M210 108l-20 20'/%3E%3Cpath d='M20 196h20M30 186v20'/%3E%3Cpath d='M96 182h40a8 8 0 0 1 8 8v18a8 8 0 0 1-8 8h-24l-10 9v-9h-6a8 8 0 0 1-8-8v-18a8 8 0 0 1 8-8z'/%3E%3Cpath d='M180 196c4-10 24-10 28 0'/%3E%3Cpath d='M172 80c8-6 16 6 24 0s16 6 24 0'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.bubble-tail-in::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -7px;
+  border: 8px solid transparent;
+  border-top-color: #fff;
+  border-left: 0;
+}
+.bubble-tail-out::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -7px;
+  border: 8px solid transparent;
+  border-top-color: var(--wa-out);
+  border-right: 0;
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.pop-in { animation: pop-in 0.22s ease-out; }

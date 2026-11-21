@@ -7,20 +7,31 @@ import { CheckDouble, FileIcon } from "@/components/ui/Icons";
 import { VoiceMessage } from "./VoiceMessage";
 
 // `mine` = rendered on the right (current viewer's own side).
-export function MessageBubble({ m, mine }: { m: Message; mine: boolean }) {
+export function MessageBubble({
+  m: raw,
+  mine,
+  label,
+}: {
+  m: Message;
+  mine: boolean;
+  // Sender name shown at the top of incoming bubbles (e.g. the book name for the bot).
+  label?: string;
+}) {
+  // Defense in depth: only ever render https attachment links (never javascript:/data:).
+  const m = raw.media_url && !raw.media_url.startsWith("https://") ? { ...raw, media_url: null } : raw;
   return (
-    <div className={`flex px-3 ${mine ? "justify-end" : "justify-start"}`}>
+    <div className={`flex px-3 md:px-[6%] ${mine ? "justify-end" : "justify-start"}`}>
       <div
-        className={`relative max-w-[78%] rounded-lg px-2.5 py-1.5 text-[14.5px] text-neutral-900 shadow-sm md:max-w-[65%] ${
+        className={`relative max-w-[85%] rounded-xl px-3 py-2 text-[15px] leading-snug text-neutral-900 shadow-sm md:max-w-[62%] ${
           mine ? "bubble-out rounded-tr-none bg-[var(--wa-out)]" : "bubble-in rounded-tl-none bg-[var(--wa-in)]"
         }`}
       >
-        {m.sender_type === "bot" && !mine && (
-          <p className="mb-0.5 text-[11px] font-semibold text-[var(--wa-header)]">Assistant</p>
+        {!mine && (label || m.sender_type === "bot") && (
+          <p className="mb-0.5 text-[13px] font-semibold text-neutral-800">{label || "Assistant"}</p>
         )}
 
         {m.media_type === "image" && m.media_url && (
-          <a href={m.media_url} target="_blank" rel="noreferrer" className="block">
+          <a href={m.media_url} target="_blank" rel="noopener noreferrer" className="block">
             <Image
               src={m.media_url}
               alt="shared image"
@@ -40,7 +51,7 @@ export function MessageBubble({ m, mine }: { m: Message; mine: boolean }) {
           <a
             href={m.media_url}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="mb-1 flex items-center gap-2 rounded-md bg-black/5 px-3 py-2 text-sm text-neutral-700"
           >
             <FileIcon className="h-5 w-5 shrink-0" />

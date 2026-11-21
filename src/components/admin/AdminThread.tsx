@@ -5,7 +5,6 @@ import { useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { uploadChatMedia } from "@/lib/upload";
 import type { Conversation, ConversationStatus, Message, Profile } from "@/lib/types";
-import { maskPhone } from "@/lib/format";
 import { BackIcon } from "@/components/ui/Icons";
 import { MessageList } from "@/components/chat/MessageList";
 import { Composer } from "@/components/chat/Composer";
@@ -86,7 +85,7 @@ export function AdminThread({
         </div>
         <div className="min-w-0 flex-1 leading-tight">
           <p className="truncate font-semibold">
-            {customer?.display_name || maskPhone(customer?.phone)}
+            {customer?.display_name || customer?.phone || "Unknown"}
           </p>
           <p className="text-xs text-emerald-100/80">{STATUS_TEXT[status]}</p>
         </div>

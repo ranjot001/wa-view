@@ -1,17 +1,19 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { EmojiIcon, AttachIcon, CameraIcon, SendIcon } from "@/components/ui/Icons";
+import { DocIcon, PaperclipIcon, SendIcon, SmileIcon } from "@/components/ui/Icons";
 import { VoiceRecorder } from "./VoiceRecorder";
 
 const QUICK_EMOJIS = ["👍", "🙏", "😊", "🔥", "✅", "❤️", "😂", "🎮"];
+// Must match the storage bucket's allow-list (migration 0003).
+const ACCEPT = "image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif";
 
 export function Composer({
   onSendText,
   onSendFile,
   onSendVoice,
   disabled,
-  placeholder = "Type a message…",
+  placeholder = "Type a message...",
 }: {
   onSendText: (text: string) => void;
   onSendFile: (file: File) => void;
@@ -22,19 +24,28 @@ export function Composer({
   const [text, setText] = useState("");
   const [showEmoji, setShowEmoji] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
-  const imgRef = useRef<HTMLInputElement>(null);
 
   function send() {
     const t = text.trim();
-    if (!t) return;
+    if (!t || disabled) return;
     onSendText(t);
     setText("");
   }
 
+  function pickFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.[0];
+    e.target.value = "";
+    if (!f) return;
+    if (f.size > 10 * 1024 * 1024) return alert("File is too large (max 10 MB)");
+    onSendFile(f);
+  }
+
+  const iconBtn = "rounded-full p-2 transition hover:bg-neutral-100 disabled:opacity-40";
+
   return (
-    <div className="relative bg-[#f0f2f5] px-2 py-2">
+    <div className="relative border-t border-neutral-200 bg-white px-2 py-2 md:px-4 md:py-3">
       {showEmoji && (
-        <div className="absolute bottom-full left-2 mb-2 flex gap-1 rounded-xl bg-white p-2 shadow-lg">
+        <div className="absolute bottom-full left-2 mb-2 flex gap-1 rounded-xl bg-white p-2 shadow-lg ring-1 ring-black/5">
           {QUICK_EMOJIS.map((e) => (
             <button
               key={e}
@@ -50,83 +61,58 @@ export function Composer({
         </div>
       )}
 
-      <div className="flex items-end gap-1.5">
-        <div className="flex flex-1 items-center gap-1 rounded-full bg-white px-2 py-1 shadow-sm">
-          <button
-            onClick={() => setShowEmoji((v) => !v)}
-            className="p-1 text-neutral-500 hover:text-[var(--wa-header)]"
-            title="Emoji"
-          >
-            <EmojiIcon className="h-6 w-6" />
-          </button>
-          <button
-            onClick={() => fileRef.current?.click()}
-            disabled={disabled}
-            className="p-1 text-neutral-500 hover:text-[var(--wa-header)] disabled:opacity-50"
-            title="Attach file"
-          >
-            <AttachIcon className="h-5 w-5 -rotate-45" />
-          </button>
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                send();
-              }
-            }}
-            rows={1}
-            placeholder={placeholder}
-            className="max-h-28 flex-1 resize-none bg-transparent py-1.5 text-[15px] text-neutral-800 outline-none placeholder:text-neutral-400"
-          />
-          <button
-            onClick={() => imgRef.current?.click()}
-            disabled={disabled}
-            className="p-1 text-neutral-500 hover:text-[var(--wa-header)] disabled:opacity-50"
-            title="Send image"
-          >
-            <CameraIcon className="h-5 w-5" />
-          </button>
-        </div>
+      <div className="flex items-center gap-0.5 md:gap-1.5">
+        <button onClick={() => setShowEmoji((v) => !v)} className={`${iconBtn} text-amber-500`} title="Emoji">
+          <SmileIcon className="h-6 w-6" />
+        </button>
+        <button
+          onClick={() => fileRef.current?.click()}
+          disabled={disabled}
+          className={`${iconBtn} hidden text-orange-500 sm:block`}
+          title="Send photo"
+        >
+          <DocIcon className="h-6 w-6" />
+        </button>
+        <VoiceRecorder
+          onComplete={onSendVoice}
+          disabled={disabled}
+          className={`${iconBtn} text-red-500`}
+        />
+        <button
+          onClick={() => fileRef.current?.click()}
+          disabled={disabled}
+          className={`${iconBtn} text-blue-500`}
+          title="Attach photo"
+        >
+          <PaperclipIcon className="h-6 w-6" />
+        </button>
 
-        {text.trim() ? (
-          <button
-            onClick={send}
-            disabled={disabled}
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--wa-header)] text-white shadow disabled:opacity-50"
-            title="Send"
-          >
-            <SendIcon className="h-5 w-5" />
-          </button>
-        ) : (
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--wa-header)] text-white shadow">
-            <VoiceRecorder onComplete={onSendVoice} disabled={disabled} />
-          </div>
-        )}
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              send();
+            }
+          }}
+          rows={1}
+          disabled={disabled}
+          placeholder={placeholder}
+          className="ml-1 max-h-28 min-w-0 flex-1 resize-none rounded-full bg-neutral-100 px-4 py-2.5 text-[15px] text-neutral-900 outline-none placeholder:text-neutral-500 md:px-5 md:py-3 md:text-base"
+        />
+
+        <button
+          onClick={send}
+          disabled={disabled || !text.trim()}
+          className="ml-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--call-green)] text-white shadow transition disabled:bg-neutral-200 disabled:text-neutral-400 md:h-12 md:w-12"
+          title="Send"
+        >
+          <SendIcon className="h-5 w-5" />
+        </button>
       </div>
 
-      <input
-        ref={fileRef}
-        type="file"
-        hidden
-        onChange={(e) => {
-          const f = e.target.files?.[0];
-          if (f) onSendFile(f);
-          e.target.value = "";
-        }}
-      />
-      <input
-        ref={imgRef}
-        type="file"
-        accept="image/*"
-        hidden
-        onChange={(e) => {
-          const f = e.target.files?.[0];
-          if (f) onSendFile(f);
-          e.target.value = "";
-        }}
-      />
+      <input ref={fileRef} type="file" accept={ACCEPT} hidden onChange={pickFile} />
     </div>
   );
 }

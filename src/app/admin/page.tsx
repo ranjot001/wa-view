@@ -3,7 +3,6 @@ import { createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/auth";
 import { AdminLogin } from "@/components/admin/AdminLogin";
 import { SignOutButton } from "@/components/admin/SignOutButton";
-import { env } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
 
@@ -30,5 +29,5 @@ export default async function AdminHome() {
     );
   }
 
-  return <AdminLogin countryCode={env.defaultCountryCode()} />;
+  return <AdminLogin />;
 }

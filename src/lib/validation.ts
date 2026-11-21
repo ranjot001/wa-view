@@ -6,11 +6,6 @@ export const nationalPhoneSchema = z
   .trim()
   .regex(/^\d{10}$/, "Enter a valid 10-digit mobile number");
 
-export const otpSchema = z
-  .string()
-  .trim()
-  .regex(/^\d{4,8}$/, "Enter the code you received");
-
 export const messageSchema = z.object({
   conversationId: z.string().uuid().optional(),
   body: z.string().trim().max(4000).optional(),

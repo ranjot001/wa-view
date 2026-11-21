@@ -8,8 +8,8 @@ export function detectMediaType(mime: string): MediaType {
 }
 
 function extFor(file: Blob, fallback: string): string {
-  const fromName = (file as File).name?.split(".").pop();
-  if (fromName && fromName.length <= 5) return fromName;
+  const fromName = (file as File).name?.split(".").pop()?.toLowerCase();
+  if (fromName && /^[a-z0-9]{1,5}$/.test(fromName)) return fromName;
   const map: Record<string, string> = {
     "audio/webm": "webm",
     "image/png": "png",
@@ -24,13 +24,15 @@ export async function uploadChatMedia(
   conversationId: string,
   file: Blob
 ): Promise<{ url: string; mediaType: MediaType }> {
-  const mediaType = detectMediaType(file.type);
+  // "audio/webm;codecs=opus" -> "audio/webm" so it matches the bucket's MIME allow-list.
+  const contentType = file.type.split(";")[0].trim() || "application/octet-stream";
+  const mediaType = detectMediaType(contentType);
   const ext = extFor(file, mediaType === "audio" ? "webm" : "bin");
   const path = `${conversationId}/${crypto.randomUUID()}.${ext}`;
 
   const { error } = await supabase.storage
     .from("chat-media")
-    .upload(path, file, { contentType: file.type || "application/octet-stream" });
+    .upload(path, file, { contentType });
   if (error) throw error;
 
   const { data } = supabase.storage.from("chat-media").getPublicUrl(path);

@@ -8,18 +8,39 @@ function required(name: string): string {
   return v;
 }
 
+// NOTE: NEXT_PUBLIC_* vars MUST be read as static literals (process.env.NEXT_PUBLIC_X),
+// not via a dynamic key — Next.js only inlines them into the browser bundle when the
+// property access is literal. A dynamic lookup returns undefined in the browser.
+function requireLiteral(value: string | undefined, name: string): string {
+  if (!value) throw new Error(`Missing required environment variable: ${name}`);
+  return value;
+}
+
 export const env = {
-  // Public (safe in the browser)
-  supabaseUrl: () => required("NEXT_PUBLIC_SUPABASE_URL"),
-  supabaseAnonKey: () => required("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
+  // Public (safe in the browser) — literal access so Next inlines them client-side.
+  supabaseUrl: () =>
+    requireLiteral(process.env.NEXT_PUBLIC_SUPABASE_URL, "NEXT_PUBLIC_SUPABASE_URL"),
+  supabaseAnonKey: () =>
+    requireLiteral(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, "NEXT_PUBLIC_SUPABASE_ANON_KEY"),
   defaultCountryCode: () => process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "+91",
+  // Optional TURN relay for voice calls (STUN alone fails behind some mobile NATs).
+  turnUrl: () => process.env.NEXT_PUBLIC_TURN_URL || "",
+  turnUsername: () => process.env.NEXT_PUBLIC_TURN_USERNAME || "",
+  turnCredential: () => process.env.NEXT_PUBLIC_TURN_CREDENTIAL || "",
 
   // Server-only
   supabaseServiceRoleKey: () => required("SUPABASE_SERVICE_ROLE_KEY"),
-  authHookSecret: () => required("SUPABASE_AUTH_HOOK_SECRET"),
-  otpProvider: () => (process.env.OTP_PROVIDER || "mock").toLowerCase(),
   anthropicApiKey: () => required("ANTHROPIC_API_KEY"),
+  // No key = no AI replies: customers get the admin's welcome message, then an agent.
+  hasAnthropicKey: () => !!process.env.ANTHROPIC_API_KEY,
   anthropicModel: () => process.env.ANTHROPIC_MODEL || "claude-sonnet-5-5",
+  // Social links page (/links). Read on the server at request time; blank = hidden.
+  socialLinks: () => ({
+    whatsapp: process.env.SOCIAL_WHATSAPP_URL || "",
+    telegram: process.env.SOCIAL_TELEGRAM_URL || "",
+    instagram: process.env.SOCIAL_INSTAGRAM_URL || "",
+    website: process.env.SOCIAL_WEBSITE_URL || "",
+  }),
 };
 
 export const BRAND = {
