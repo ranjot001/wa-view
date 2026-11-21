@@ -7,6 +7,10 @@ import { ChatBubbleIcon } from "@/components/ui/Icons";
 import { nationalPhoneSchema } from "@/lib/validation";
 import { BRAND } from "@/lib/env";
 
+// Turned off for now: after entering the number, go straight to the chat instead of the
+// full-page install step (/install). Set to true to bring the install step back.
+const SHOW_INSTALL_STEP_AFTER_LOGIN = false;
+
 // Customer entry: mobile number only (no OTP), then straight into the chat.
 export function VerifyClient({ countryCode, bookName }: { countryCode: string; bookName: string }) {
   const router = useRouter();
@@ -33,7 +37,7 @@ export function VerifyClient({ countryCode, bookName }: { countryCode: string; b
       setError(error || "Sign-in failed");
       return;
     }
-    router.replace("/install");
+    router.replace(SHOW_INSTALL_STEP_AFTER_LOGIN ? "/install" : "/chat");
     router.refresh();
   }
 

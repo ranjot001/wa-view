@@ -26,6 +26,10 @@ import { formatTime } from "@/lib/format";
 import { usePwaInstall } from "@/lib/pwa";
 
 const MODAL_SEEN_KEY = "book:install-modal-seen";
+// Turned off for now: don't pop the install popup automatically when the chat opens.
+// Customers can still install from the Install button in the top bar.
+// Set to true to bring the automatic popup back.
+const AUTO_SHOW_INSTALL_POPUP = false;
 
 export function ChatClient({
   conversation,
@@ -55,7 +59,7 @@ export function ChatClient({
 
   // Show the install popup once per browser session until the app is installed.
   useEffect(() => {
-    if (!pwa.ready || pwa.installed) return;
+    if (!AUTO_SHOW_INSTALL_POPUP || !pwa.ready || pwa.installed) return;
     let seen = false;
     try {
       seen = sessionStorage.getItem(MODAL_SEEN_KEY) === "1";
