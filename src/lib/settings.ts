@@ -29,14 +29,21 @@ export const settingsSchema = z.object({
   welcomeMessage: z.string().trim().min(1, "Welcome message is required").max(2000),
 });
 
-// Server-only. Falls back to defaults if the table isn't there yet (migration 0004).
+// Server-only. Falls back to defaults if the table isn't there yet (migration 0004), or
+// if Supabase env vars are missing (e.g. preview builds) — branding must never break a page.
 export const getSettings = cache(async (): Promise<AppSettings> => {
-  const { data, error } = await createAdminClient()
-    .from("app_settings")
-    .select("book_name, support_name, welcome_message")
-    .eq("id", 1)
-    .maybeSingle<{ book_name: string; support_name: string; welcome_message: string }>();
-  if (error || !data) return DEFAULT_SETTINGS;
+  let data: { book_name: string; support_name: string; welcome_message: string } | null = null;
+  try {
+    const res = await createAdminClient()
+      .from("app_settings")
+      .select("book_name, support_name, welcome_message")
+      .eq("id", 1)
+      .maybeSingle<{ book_name: string; support_name: string; welcome_message: string }>();
+    if (!res.error) data = res.data;
+  } catch (e) {
+    console.error("[settings] using defaults:", e instanceof Error ? e.message : e);
+  }
+  if (!data) return DEFAULT_SETTINGS;
   return {
     bookName: data.book_name || DEFAULT_SETTINGS.bookName,
     supportName: data.support_name || DEFAULT_SETTINGS.supportName,
