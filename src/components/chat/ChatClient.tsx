@@ -22,7 +22,8 @@ import {
   StatusIcon,
   UserIcon,
 } from "@/components/ui/Icons";
-import { formatPhone, formatTime } from "@/lib/format";
+import { formatPhone } from "@/lib/format";
+import { LocalTime } from "@/components/ui/LocalTime";
 import { usePwaInstall } from "@/lib/pwa";
 
 const MODAL_SEEN_KEY = "book:install-modal-seen";
@@ -282,7 +283,7 @@ function ChatList({
           <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between gap-2">
               <p className="truncate text-[16px] font-medium">💻 {supportName}</p>
-              {last && <span className="shrink-0 text-xs text-neutral-500">{formatTime(last.created_at)}</span>}
+              {last && <span className="shrink-0 text-xs text-neutral-500"><LocalTime iso={last.created_at} /></span>}
             </div>
             <p className="truncate text-sm text-neutral-500">
               {prefix}

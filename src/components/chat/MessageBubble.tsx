@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import type { Message } from "@/lib/types";
-import { formatTime } from "@/lib/format";
+import { LocalTime } from "@/components/ui/LocalTime";
 import { CheckDouble, FileIcon } from "@/components/ui/Icons";
 import { VoiceMessage } from "./VoiceMessage";
 
@@ -62,7 +62,7 @@ export function MessageBubble({
         {m.body && <span className="whitespace-pre-wrap break-words">{m.body}</span>}
 
         <span className="float-right ml-2 mt-1 flex select-none items-center gap-1 text-[10px] text-neutral-500">
-          {formatTime(m.created_at)}
+          <LocalTime iso={m.created_at} />
           {mine && (
             <CheckDouble
               className="h-3.5 w-3.5"

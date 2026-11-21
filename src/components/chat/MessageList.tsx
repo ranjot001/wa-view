@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import type { Message, SenderType } from "@/lib/types";
-import { dayKey, dayLabel } from "@/lib/format";
+import { dayKey } from "@/lib/format";
+import { LocalTime, useMounted } from "@/components/ui/LocalTime";
 import { MessageBubble } from "./MessageBubble";
 
 // `mineSide` decides which sender_type sits on the right:
@@ -27,6 +28,8 @@ export function MessageList({
   loggedInAs?: string;
 }) {
   const endRef = useRef<HTMLDivElement>(null);
+  // Day separators depend on the viewer's timezone — only compute them in the browser.
+  const mounted = useMounted();
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -44,8 +47,8 @@ export function MessageList({
       {messages.length === 0 && loggedInAs && <LoggedInChip phone={loggedInAs} />}
 
       {messages.map((m, i) => {
-        const k = dayKey(m.created_at);
-        const showDay = k !== lastDay;
+        const k = mounted ? dayKey(m.created_at) : "";
+        const showDay = mounted && k !== lastDay;
         lastDay = k;
         const mine = mineSide === "user" ? m.sender_type === "user" : m.sender_type === "admin";
         const agentJoined = !!startedWith && m.sender_type === "admin" && !agentSeen;
@@ -54,7 +57,7 @@ export function MessageList({
           m.sender_type === "bot" ? botName : m.sender_type === "admin" && mineSide === "user" ? "Support" : undefined;
         return (
           <div key={m.id} className="space-y-2">
-            {showDay && <Chip upper>{dayLabel(m.created_at)}</Chip>}
+            {showDay && <Chip upper><LocalTime iso={m.created_at} as="day" /></Chip>}
             {i === 0 && startedWith && <Chip tone="sys">Chat started with 💻 {startedWith}</Chip>}
             {i === 0 && loggedInAs && <LoggedInChip phone={loggedInAs} />}
             {agentJoined && <Chip tone="sys">Support agent joined the conversation</Chip>}
