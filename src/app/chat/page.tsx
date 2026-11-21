@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { getSettings, renderWelcome } from "@/lib/settings";
 import { ChatClient } from "@/components/chat/ChatClient";
 import type { Conversation, Message } from "@/lib/types";
 
@@ -12,20 +14,38 @@ export default async function ChatPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/verify");
 
-  // Ensure a conversation exists for this user (RLS: users insert their own).
+  // Ensure a conversation exists for this user. Customers can't write tables directly
+  // (migration 0003), so create it with the service role, scoped to this user's id.
   let { data: conversation } = await supabase
     .from("conversations")
     .select("*")
     .eq("user_id", user.id)
     .maybeSingle<Conversation>();
 
+  const settings = await getSettings();
+
   if (!conversation) {
-    const { data: created } = await supabase
+    const admin = createAdminClient();
+    const { data: created } = await admin
       .from("conversations")
-      .insert({ user_id: user.id, status: "bot" })
+      .upsert({ user_id: user.id, status: "bot" }, { onConflict: "user_id", ignoreDuplicates: true })
       .select("*")
-      .single<Conversation>();
-    conversation = created;
+      .maybeSingle<Conversation>();
+    // Brand-new chat: post the admin's welcome message as the first (automatic) reply.
+    if (created) {
+      await admin
+        .from("messages")
+        .insert({ conversation_id: created.id, sender_type: "bot", body: renderWelcome(settings) });
+    }
+    conversation =
+      created ??
+      (
+        await supabase
+          .from("conversations")
+          .select("*")
+          .eq("user_id", user.id)
+          .maybeSingle<Conversation>()
+      ).data;
   }
 
   if (!conversation) {
@@ -43,6 +63,9 @@ export default async function ChatPage() {
     <ChatClient
       conversation={conversation}
       initialMessages={messages ?? []}
+      bookName={settings.bookName}
+      supportName={settings.supportName}
+      customerPhone={user.phone ? `+${user.phone.replace(/^\+/, "")}` : ""}
     />
   );
 }

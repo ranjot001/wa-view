@@ -28,7 +28,7 @@ export function useRealtimeMessages(
 
   useEffect(() => {
     const channel = supabase
-      .channel(`conv:${conversationId}`)
+      .channel(`conv:${conversationId}`, { config: { private: true } })
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "messages", filter: `conversation_id=eq.${conversationId}` },

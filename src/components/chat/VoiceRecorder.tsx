@@ -7,9 +7,11 @@ import { MicIcon, SendIcon } from "@/components/ui/Icons";
 export function VoiceRecorder({
   onComplete,
   disabled,
+  className = "p-1 text-neutral-500 hover:text-[var(--wa-header)] disabled:opacity-50",
 }: {
   onComplete: (blob: Blob) => void;
   disabled?: boolean;
+  className?: string;
 }) {
   const [recording, setRecording] = useState(false);
   const [elapsed, setElapsed] = useState(0);
@@ -25,7 +27,7 @@ export function VoiceRecorder({
       mr.ondataavailable = (e) => e.data.size && chunksRef.current.push(e.data);
       mr.onstop = () => {
         stream.getTracks().forEach((t) => t.stop());
-        const blob = new Blob(chunksRef.current, { type: "audio/webm" });
+        const blob = new Blob(chunksRef.current, { type: mr.mimeType || "audio/webm" });
         if (blob.size > 0) onComplete(blob);
       };
       mr.start();
@@ -77,7 +79,7 @@ export function VoiceRecorder({
     <button
       onClick={start}
       disabled={disabled}
-      className="p-1 text-neutral-500 hover:text-[var(--wa-header)] disabled:opacity-50"
+      className={className}
       title="Record voice note"
     >
       <MicIcon className="h-6 w-6" />

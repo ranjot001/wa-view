@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { messageSchema } from "@/lib/validation";
+import { env } from "@/lib/env";
 import { generateBotReply, keywordHandoff } from "@/lib/ai/client";
+import { isOwnMediaUrl, rateLimit } from "@/lib/security";
 import type { Conversation, Message } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -14,6 +16,17 @@ export async function POST(req: Request) {
   } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  // Each message can trigger a paid Claude call: cap bursts and daily volume per customer.
+  if (
+    !(await rateLimit(`chat:min:${user.id}`, 12, 60)) ||
+    !(await rateLimit(`chat:day:${user.id}`, 300, 86_400))
+  ) {
+    return NextResponse.json(
+      { error: "You're sending messages too fast — please wait a moment" },
+      { status: 429 }
+    );
+  }
+
   const json = await req.json().catch(() => null);
   const parsed = messageSchema.safeParse(json);
   if (!parsed.success || !parsed.data.conversationId) {
@@ -22,6 +35,9 @@ export async function POST(req: Request) {
   const { conversationId, body, mediaUrl, mediaType, replyTo } = parsed.data;
   if (!body && !mediaUrl) {
     return NextResponse.json({ error: "Empty message" }, { status: 400 });
+  }
+  if (mediaUrl && (!mediaType || !isOwnMediaUrl(mediaUrl, conversationId))) {
+    return NextResponse.json({ error: "Invalid attachment" }, { status: 400 });
   }
 
   // The conversation must belong to this user (also enforced by RLS).
@@ -38,8 +54,22 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "This chat is closed" }, { status: 409 });
   }
 
-  // Insert the user's message (RLS allows own 'user' messages).
-  const { data: userMessage, error: insErr } = await supabase
+  const admin = createAdminClient();
+
+  // A reply may only quote a message from this same conversation.
+  if (replyTo) {
+    const { data: quoted } = await admin
+      .from("messages")
+      .select("id")
+      .eq("id", replyTo)
+      .eq("conversation_id", conversationId)
+      .maybeSingle();
+    if (!quoted) return NextResponse.json({ error: "Invalid reply" }, { status: 400 });
+  }
+
+  // Insert with the service role (customers have no direct write access); every field
+  // has been validated above and sender is pinned to this user.
+  const { data: userMessage, error: insErr } = await admin
     .from("messages")
     .insert({
       conversation_id: conversationId,
@@ -61,7 +91,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ userMessage });
   }
 
-  const admin = createAdminClient();
+  // No AI configured: the welcome message was the automatic reply; queue for an agent.
+  if (!env.hasAnthropicKey()) {
+    await admin.from("conversations").update({ status: "pending_human" }).eq("id", conversationId);
+    return NextResponse.json({ userMessage });
+  }
 
   try {
     const { data: history } = await admin

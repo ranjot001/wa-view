@@ -18,7 +18,8 @@ export default async function AdminConversationsPage() {
   return (
     <AdminConversationList
       initial={data ?? []}
-      adminName={ctx.profile.display_name || ctx.profile.phone || "Admin"}
+      adminName={ctx.profile.display_name || ctx.user.email || "Admin"}
+      adminId={ctx.user.id}
     />
   );
 }
