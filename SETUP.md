@@ -1,4 +1,4 @@
-# Sprinter Customer Care — setup
+# Reddy Customers Care — setup
 
 WhatsApp-styled customer-care app (the client's own **Sprinters** branding — not a
 WhatsApp clone). Customer enters their mobile number → chat with an AI bot

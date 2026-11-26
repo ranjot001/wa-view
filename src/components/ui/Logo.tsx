@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-// Stylized gold "Sprinters" crest. Swap for the client's real logo asset later
+// Stylized gold "Reddy" crest. Swap for the client's real logo asset later
 // (drop a PNG/SVG in /public and replace this component's innards).
 
 export function Logo({ size = 120 }: { size?: number }) {
@@ -32,7 +32,7 @@ export function Logo({ size = 120 }: { size?: number }) {
           fill="url(#gold)"
           fontFamily="Georgia, 'Times New Roman', serif"
         >
-          SPRINTERS
+          REDDY
         </text>
         <text
           x="60"
@@ -69,7 +69,7 @@ export function LogoBadge({ size = 40 }: { size?: number }) {
           d="M12 2l2.2 3.6L18 3l-1.1 5H7.1L6 3l3.8 2.6z"
           fill="url(#goldb)"
         />
-        <text x="12" y="20" textAnchor="middle" fontSize="9" fontWeight="800" fill="url(#goldb)" fontFamily="Georgia, serif">S</text>
+        <text x="12" y="20" textAnchor="middle" fontSize="9" fontWeight="800" fill="url(#goldb)" fontFamily="Georgia, serif">R</text>
       </svg>
     </div>
   );
@@ -92,7 +92,7 @@ export function LogoTile({ size = 44, rounded = "rounded-xl" }: { size?: number;
         </defs>
         <path d="M12 2.2l2.2 3.6L18 3.2l-1.1 5H7.1L6 3.2l3.8 2.6z" fill={`url(#${id})`} />
         <text x="12" y="20.5" textAnchor="middle" fontSize="10" fontWeight="900" fill={`url(#${id})`} fontFamily="Georgia, serif">
-          S
+          R
         </text>
       </svg>
     </div>

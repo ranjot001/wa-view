@@ -78,7 +78,7 @@ export function CallScreen({
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-between call-bg px-6 pb-14 pt-20 text-white">
       <div className="flex flex-col items-center text-center">
         <p className="text-xs uppercase tracking-[0.25em] text-[var(--gold-300)]/70">
-          {incoming ? "Sprinter Care · Incoming" : "Sprinter Care · Voice call"}
+          {incoming ? "Reddy Customers Care · Incoming" : "Reddy Customers Care · Voice call"}
         </p>
         <div className="relative mt-10">
           {(state === "ringing" || state === "incoming") && (

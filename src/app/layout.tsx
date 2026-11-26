@@ -26,6 +26,16 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Catch the install prompt before React hydrates — Chrome often fires it very early,
+            and if we miss it the Install button can't open the one-tap native dialog. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__bip=e;});",
+          }}
+        />
+      </head>
       <body className="antialiased">
         {children}
         <ServiceWorker />

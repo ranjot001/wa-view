@@ -7,6 +7,7 @@ import { ChatBubbleIcon } from "@/components/ui/Icons";
 import { nationalPhoneSchema } from "@/lib/validation";
 import { formatNationalPartial } from "@/lib/format";
 import { BRAND } from "@/lib/env";
+import { LoginInstallCard } from "./LoginInstallCard";
 
 // Turned off for now: after entering the number, go straight to the chat instead of the
 // full-page install step (/install). Set to true to bring the install step back.
@@ -106,6 +107,8 @@ export function VerifyClient({ countryCode, bookName }: { countryCode: string; b
             {error}
           </p>
         )}
+
+        <LoginInstallCard bookName={bookName} />
 
         <div className="mt-6 flex items-center justify-center gap-5 text-xs text-neutral-500">
           <span className="flex items-center gap-1"><Dot /> Secure</span>

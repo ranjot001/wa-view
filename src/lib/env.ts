@@ -44,8 +44,8 @@ export const env = {
 };
 
 export const BRAND = {
-  name: "Sprinter Customer Care",
-  shortName: "Sprinter Care",
+  name: "Reddy Customers Care",
+  shortName: "Reddy Care",
   tagline: "King of Online Gaming",
   subtitle: "Enter your 10-digit mobile to start chatting",
 } as const;

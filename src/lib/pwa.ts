@@ -20,6 +20,12 @@ const listeners = new Set<() => void>();
 const notify = () => listeners.forEach((l) => l());
 
 export function initPwaCapture() {
+  // Pick up an event the inline <head> script caught before hydration.
+  const early = (window as Window & { __bip?: BIPEvent }).__bip;
+  if (early && !isStandalone()) {
+    deferred = early;
+    notify();
+  }
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferred = e as BIPEvent;

@@ -18,8 +18,8 @@ export const DEFAULT_WELCOME = `✈️ {book}✈️
 🇮🇳 తెలుగు: 📲 {book} యాప్ డౌన్‌లోడ్ చేసి INSTALL APPLICATION క్లిక్ చేయండి. 🔔 అన్ని అప్‌డేట్స్ కోసం నోటిఫికేషన్లను అనుమతించండి!`;
 
 export const DEFAULT_SETTINGS: AppSettings = {
-  bookName: "SPRINTER BOOK",
-  supportName: "SPRINTER PANEL HUB",
+  bookName: "Reddy Customers Care",
+  supportName: "Reddy Customers Care",
   welcomeMessage: DEFAULT_WELCOME,
 };
 
