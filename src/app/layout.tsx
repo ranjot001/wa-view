@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: `Chat with ${bookName} support.`,
     manifest: "/manifest.webmanifest",
     appleWebApp: { capable: true, title: bookName, statusBarStyle: "default" },
-    icons: { icon: "/icons/icon.svg", apple: "/icons/icon-192.png" },
+    icons: { icon: "/icons/icon-192.png", apple: "/icons/icon-192.png" },
   };
 }
 

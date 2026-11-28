@@ -70,11 +70,9 @@ export function LinksClient({ links, bookName }: { links: SocialLinks; bookName:
     <main className="links-bg relative min-h-dvh px-4 pb-32 pt-12">
       <div className="mx-auto w-full max-w-md">
         <div className="flex flex-col items-center text-center">
-          <div className="flex h-28 w-28 items-center justify-center rounded-full bg-[var(--ink-950)] shadow-[0_0_48px_rgba(235,197,106,0.28)] ring-2 ring-[var(--gold-500)]/40">
-            <Logo size={92} />
-          </div>
-          <h1 className="mt-5 text-2xl font-bold text-white">{bookName}</h1>
-          <p className="mt-1 text-sm text-neutral-400">Follow us &amp; stay connected</p>
+          <Logo size={280} className="shadow-[0_0_48px_rgba(235,197,106,0.22)] ring-1 ring-[var(--gold-500)]/30" />
+          <h1 className="sr-only">{bookName}</h1>
+          <p className="mt-4 text-sm text-neutral-400">Follow us &amp; stay connected</p>
         </div>
 
         <ul className="mt-8 space-y-3.5">

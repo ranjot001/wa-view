@@ -1,100 +1,41 @@
-import { useId } from "react";
+/* eslint-disable @next/next/no-img-element */
 
-// Stylized gold "Reddy" crest. Swap for the client's real logo asset later
-// (drop a PNG/SVG in /public and replace this component's innards).
+// Reddy Anna brand logo (public/brand/reddy-logo.webp — gold wordmark on black).
+const SRC = "/brand/reddy-logo.webp";
+const RATIO = 342 / 960; // height / width of the artwork
 
-export function Logo({ size = 120 }: { size?: number }) {
+// Full wordmark. `size` is the rendered width in px.
+export function Logo({ size = 120, className = "" }: { size?: number; className?: string }) {
   return (
-    <div className="flex flex-col items-center select-none" style={{ width: size }}>
-      <svg viewBox="0 0 120 70" width={size} height={size * 0.58} aria-hidden>
-        <defs>
-          <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#f6e2a0" />
-            <stop offset="0.5" stopColor="#e7c15b" />
-            <stop offset="1" stopColor="#b8860b" />
-          </linearGradient>
-        </defs>
-        <g fill="url(#gold)">
-          {/* crown flourish */}
-          <path d="M60 6l6 10 10-8-3 14h-26l-3-14 10 8z" />
-          <circle cx="60" cy="4" r="3" />
-          <rect x="37" y="23" width="46" height="2.4" rx="1.2" />
-        </g>
-        <text
-          x="60"
-          y="48"
-          textAnchor="middle"
-          fontSize="20"
-          fontWeight="800"
-          letterSpacing="2"
-          textLength="110"
-          lengthAdjust="spacingAndGlyphs"
-          fill="url(#gold)"
-          fontFamily="Georgia, 'Times New Roman', serif"
-        >
-          REDDY
-        </text>
-        <text
-          x="60"
-          y="62"
-          textAnchor="middle"
-          fontSize="6.5"
-          letterSpacing="3"
-          textLength="104"
-          lengthAdjust="spacingAndGlyphs"
-          fill="#d9c58a"
-          fontFamily="ui-sans-serif, system-ui"
-        >
-          KING OF ONLINE GAMING
-        </text>
-      </svg>
+    <img
+      src={SRC}
+      alt="Reddy Anna"
+      width={size}
+      height={Math.round(size * RATIO)}
+      className={`h-auto max-w-full select-none rounded-lg ${className}`}
+      draggable={false}
+    />
+  );
+}
+
+// Square/round black tile with the wordmark centred — avatars, banners, small marks.
+export function LogoTile({ size = 44, rounded = "rounded-xl" }: { size?: number; rounded?: string }) {
+  return (
+    <div
+      className={`flex shrink-0 items-center justify-center overflow-hidden bg-black shadow-sm ring-1 ring-[var(--gold-500)]/35 ${rounded}`}
+      style={{ width: size, height: size }}
+    >
+      <img
+        src={SRC}
+        alt=""
+        aria-hidden
+        draggable={false}
+        style={{ width: rounded === "rounded-full" ? "88%" : "94%", height: "auto" }}
+      />
     </div>
   );
 }
 
 export function LogoBadge({ size = 40 }: { size?: number }) {
-  return (
-    <div
-      className="flex items-center justify-center rounded-full bg-black/40 ring-1 ring-[var(--brand-gold)]/40"
-      style={{ width: size, height: size }}
-    >
-      <svg viewBox="0 0 24 24" width={size * 0.62} height={size * 0.62} aria-hidden>
-        <defs>
-          <linearGradient id="goldb" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#f6e2a0" />
-            <stop offset="1" stopColor="#c99a2e" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M12 2l2.2 3.6L18 3l-1.1 5H7.1L6 3l3.8 2.6z"
-          fill="url(#goldb)"
-        />
-        <text x="12" y="20" textAnchor="middle" fontSize="9" fontWeight="800" fill="url(#goldb)" fontFamily="Georgia, serif">R</text>
-      </svg>
-    </div>
-  );
-}
-
-// Midnight tile with the gold crest — the brand mark on light screens.
-export function LogoTile({ size = 44, rounded = "rounded-xl" }: { size?: number; rounded?: string }) {
-  const id = useId();
-  return (
-    <div
-      className={`flex shrink-0 items-center justify-center bg-gradient-to-b from-[var(--ink-700)] to-[var(--ink-900)] shadow-sm ring-1 ring-[var(--gold-500)]/35 ${rounded}`}
-      style={{ width: size, height: size }}
-    >
-      <svg viewBox="0 0 24 24" width={size * 0.66} height={size * 0.66} aria-hidden>
-        <defs>
-          <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#f6dd9a" />
-            <stop offset="1" stopColor="#c99a2e" />
-          </linearGradient>
-        </defs>
-        <path d="M12 2.2l2.2 3.6L18 3.2l-1.1 5H7.1L6 3.2l3.8 2.6z" fill={`url(#${id})`} />
-        <text x="12" y="20.5" textAnchor="middle" fontSize="10" fontWeight="900" fill={`url(#${id})`} fontFamily="Georgia, serif">
-          R
-        </text>
-      </svg>
-    </div>
-  );
+  return <LogoTile size={size} rounded="rounded-full" />;
 }

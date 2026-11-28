@@ -47,14 +47,12 @@ export function VerifyClient({ countryCode, bookName }: { countryCode: string; b
     <main className="brand-bg min-h-dvh flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-[420px] rounded-3xl border border-[var(--brand-border)] bg-[var(--brand-card)]/90 p-7 shadow-2xl backdrop-blur">
         <div className="flex justify-center pb-2">
-          <Logo size={190} />
+          <Logo size={280} />
         </div>
         <div className="my-4 h-px w-full bg-gradient-to-r from-transparent via-[var(--brand-gold)]/40 to-transparent" />
 
-        <h1 className="text-gold text-center text-2xl font-extrabold tracking-wide">
-          {bookName}
-        </h1>
-        <p className="mt-1 text-center text-sm text-neutral-400">{BRAND.subtitle}</p>
+        <h1 className="sr-only">{bookName}</h1>
+        <p className=" text-center text-sm text-neutral-400">{BRAND.subtitle}</p>
 
         <div className="mt-6 flex items-stretch overflow-hidden rounded-2xl border border-[var(--brand-gold)]/30 bg-black/40 focus-within:border-[var(--brand-gold)]/70">
           <span className="flex items-center bg-black/50 px-4 text-sm font-semibold text-[var(--brand-gold)]">

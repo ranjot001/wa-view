@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { LogoBadge } from "@/components/ui/Logo";
+import { Logo, LogoBadge } from "@/components/ui/Logo";
 import {
   CheckCircleIcon,
   DownloadIcon,
@@ -96,12 +96,10 @@ export function InstallClient({ next = "/chat", bookName }: { next?: string; boo
           <>
             <StepPill n={2} label="Install App" />
             <div className="flex justify-center pt-2">
-              <AppIcon size={96} />
+              <Logo size={260} />
             </div>
-            <h1 className="mt-5 text-center text-2xl font-bold text-[var(--brand-gold)]">
-              {bookName} App
-            </h1>
-            <p className="mt-1 text-center text-sm text-neutral-400">
+            <h1 className="sr-only">{bookName} App</h1>
+            <p className="mt-4 text-center text-sm text-neutral-400">
               App ko home screen par add karein — ek tap mein support se baat karein.
             </p>
 
